@@ -1,0 +1,127 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: { 
+typeName: 'Procurement List',
+typeNamePlural: 'Procurement Lists',
+title: { value: 'Plist' },
+description: { 
+label: 'Manage Procurement List',
+type: #STANDARD,
+value: 'Name'}}
+annotate entity ZC_PL_HEAD_TP
+    with 
+{
+@UI.facet: [{
+id: 'General',
+type: #COLLECTION,
+purpose: #STANDARD,
+label: 'Procuremen List - Plate Number' },
+
+//{ id: 'Attachment',
+//type: #COLLECTION,
+//purpose: #STANDARD,
+//label: 'Attachments'},
+
+{ id: 'PList',
+type: #FIELDGROUP_REFERENCE,
+purpose: #STANDARD,
+label: 'Procurement List',
+parentId: 'General',
+targetQualifier: 'PList'},
+
+{ id: 'Plate',
+type: #FIELDGROUP_REFERENCE,
+purpose: #STANDARD,
+label: 'Plate# to be replaced',
+parentId: 'General',
+targetQualifier: 'Plate'},
+
+{ id: 'AdditionalInfo',
+type: #FIELDGROUP_REFERENCE,
+purpose: #STANDARD,
+label: 'Additional Indormation',
+parentId: 'General',
+targetQualifier: 'AdditionalInfo'},
+
+//{ id: 'AttachFiles',
+//type: #FIELDGROUP_REFERENCE,
+//purpose: #STANDARD,
+//label: 'Reference File',
+//parentId: 'Attachment',
+//targetQualifier: 'AttachFiles' },
+
+{ id:'HeaderStatus',
+ purpose: #HEADER,
+ type: #DATAPOINT_REFERENCE,
+ targetQualifier: 'Status',
+ position: 10
+ },
+ {
+           id: 'Upload',
+           purpose: #STANDARD,
+           label: 'Upload Attachments',
+           type: #LINEITEM_REFERENCE,
+           position: 20,
+           targetElement: '_PLAttach'
+       }
+ ]
+
+@UI.selectionField: [{ position: 10 }]
+@UI.lineItem: [{ position: 10, label: 'Procurement List' }]
+@UI.fieldGroup: [{ position: 10, label: 'Procurement List Number', qualifier: 'PList' }]
+    Plist;
+@UI.lineItem: [{ position: 20, label: 'Name' }]
+@UI.fieldGroup: [{ position: 20, label: 'Name', qualifier: 'PList' }]
+    Name;
+@UI.selectionField: [{ position: 40 }]
+@UI.lineItem: [{ position: 30, label: 'Plate#' }]
+@UI.fieldGroup: [{ position: 30, label: 'Plate#', qualifier: 'Plate' }]
+    PlateNo;
+@UI.selectionField: [{ position: 50 }]
+@UI.lineItem: [{ position: 40, label: 'Change Request#' }]
+@EndUserText.label: 'CR#'
+    EstChgReq;
+@UI.lineItem: [{ position: 50, label: 'Quantity' }]
+    Qty;
+@UI.lineItem: [{ position: 60, label: 'Unit' }]    
+    Unit;
+@UI.selectionField: [{ position: 60 }]    
+@UI.lineItem: [{ position: 70, label: 'Division' }]    
+    Division;
+@UI.selectionField: [{ position: 70 }]    
+@UI.lineItem: [{ position: 80, label: 'Owner' }]    
+    Owner;
+@UI.selectionField: [{ position: 80 }]    
+@UI.lineItem: [{ position: 90, label: 'User' }]
+@EndUserText.label: 'User'    
+    Zzuser;
+@UI.lineItem: [{ position: 100, label: 'Diso' }]    
+@UI.fieldGroup: [{ position: 10, label: 'Diso', qualifier: 'AdditionalInfo' }]    
+    Diso;
+@UI.lineItem: [{ position: 110, label: 'Diso Options' }]    
+@UI.fieldGroup: [{ position: 20, label: 'Diso Options', qualifier: 'AdditionalInfo' }]
+    DisoOptions;
+@UI.fieldGroup: [{ position: 30, label: 'Comments', qualifier: 'AdditionalInfo' }]        
+    Comments;
+@UI.selectionField: [{ position: 90 }]    
+@UI.lineItem: [{ position: 120, label: 'Status' }]    
+@UI.dataPoint:{ title: 'Status', qualifier: 'Status' }
+    Status;
+@UI.lineItem: [{ position: 130, label: 'Approved By' }]    
+    ApprovedBy;
+@UI.selectionField: [{ position: 30 }]
+//@UI.fieldGroup: [{ position: 10, label: 'Created By', qualifier: 'AttachFiles' }]
+@EndUserText.label: 'Created By'
+    CreatedBy;
+@UI.selectionField: [{ position: 20 }]
+@EndUserText.label: 'Created On'
+    CreatedAt;
+@UI.hidden: true
+    ChangedBy;
+@UI.hidden: true
+    ChangedAt;
+//@UI.hidden: true
+//    UnitName;
+    /* Associations */
+//    _UnitOfMeasure;
+    
+}

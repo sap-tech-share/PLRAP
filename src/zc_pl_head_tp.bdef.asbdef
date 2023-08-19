@@ -1,0 +1,27 @@
+projection;
+strict;
+use draft;
+define behavior for ZC_PL_HEAD_TP alias Plist
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _PLAttach { create; with draft; }
+
+  use action SetStatusComplete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}
+
+define behavior for zc_pl_attach alias Attachment
+{
+  use update;
+  use delete;
+
+  use association _Head { with draft; }
+}

@@ -1,0 +1,91 @@
+managed implementation in class zbp_i_pl_head_tp unique;
+strict;
+with draft;
+define behavior for ZI_PL_HEAD_TP alias Plist
+persistent table ztab_pl_head
+draft table ztab_pl_head_d
+lock master
+total etag ChangedAt
+early numbering
+authorization master ( instance )
+etag master LoclChangedAt
+{
+  field ( readonly ) Plist, Status, CreatedAt, CreatedBy, ChangedAt, ChangedBy, LoclChangedAt;
+  field ( mandatory ) PlateNo;
+  create;
+  update;
+  delete;
+
+  validation ValidatePlate on save { field PlateNo; create; }
+  determination SetInitialStatus on modify { create; }
+  action (features : instance) SetStatusComplete result [1] $self;
+
+  draft action Edit;
+  draft action Resume;
+  draft action Activate;
+  draft action Discard;
+  draft determine action Prepare { validation ValidatePlate; }
+
+  association _PLAttach { create; with draft; }
+  mapping for ztab_pl_head {
+   Plist = plist;
+   Name = name;
+   PlateNo = plate_no;
+   EstChgReq =  est_chg_req;
+   Qty = qty;
+   Unit = unit;
+   Division = division;
+   Owner = owner;
+    Zzuser = zzuser;
+    YearOfConst = year_of_const;
+    ExpDate = exp_date;
+    KmReading = km_reading;
+    ActConfig = act_config;
+    EquipConCode = equip_con_code;
+    AllocCode = alloc_code;
+    EquipType = equip_type;
+    Description = description;
+    Diso = diso;
+    DisoOptions = diso_options;
+    LogCatg = log_catg;
+    Comments = comments;
+    RefFile = ref_file;
+    Attachmnt = attachmnt;
+    Status = status;
+    ApprovedBy = apprv_by;
+    ProcFileNo = proc_file_no;
+    ContractNo = contract_no;
+    ProcurementDate = procurement_dt;
+    DeliveryDate = delivery_dt;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    ChangedBy = changed_by;
+    ChangedAt = changed_at;
+    LoclChangedAt = locl_changed_at;
+  }
+}
+
+define behavior for ZI_PL_ATTACH alias Attachment
+implementation in class zbp_i_pl_attach unique
+
+persistent table ztab_pl_attach
+draft table ztab_pl_attach_d
+early numbering
+lock dependent by _Head
+authorization dependent by _Head
+etag master LastChangedAt
+{
+  field ( readonly ) Plist, AttachNo;
+  update;
+  delete;
+  association _Head { with draft; }
+  mapping for ztab_pl_attach
+  {
+    Plist = plist;
+    AttachNo = attach_no;
+    Attachment = attachment;
+    Filename = filename;
+    Mimetype = mimetype;
+    LastChangedAt = last_changed_at;
+  }
+}
