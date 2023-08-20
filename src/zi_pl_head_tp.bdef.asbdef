@@ -18,7 +18,7 @@ etag master LoclChangedAt
 
   validation ValidatePlate on save { field PlateNo; create; }
   determination SetInitialStatus on modify { create; }
-  action (features : instance) SetStatusComplete result [1] $self;
+  action (features : instance) SetStatusComplete parameter za_status result [1] $self;
 
   draft action Edit;
   draft action Resume;

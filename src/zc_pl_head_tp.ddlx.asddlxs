@@ -2,11 +2,10 @@
 @UI.headerInfo: { 
 typeName: 'Procurement List',
 typeNamePlural: 'Procurement Lists',
-title: { value: 'Plist' },
+title: { value: 'Plist', label: 'Procurement List' },
 description: { 
 label: 'Manage Procurement List',
-type: #STANDARD,
-value: 'Name'}}
+type: #STANDARD, value: 'Zzuser'}}
 annotate entity ZC_PL_HEAD_TP
     with 
 {
@@ -17,12 +16,12 @@ purpose: #STANDARD,
 label: 'Procuremen List - Plate Number' },
 
 
-{ id: 'PList',
-type: #FIELDGROUP_REFERENCE,
-purpose: #STANDARD,
-label: 'Procurement List',
-parentId: 'General',
-targetQualifier: 'PList'},
+//{ id: 'PList',
+//type: #FIELDGROUP_REFERENCE,
+//purpose: #STANDARD,
+//label: 'Procurement List',
+//parentId: 'General',
+//targetQualifier: 'PList'},
 
 { id: 'Plate',
 type: #FIELDGROUP_REFERENCE,
@@ -35,7 +34,7 @@ targetQualifier: 'Plate'},
 type: #FIELDGROUP_REFERENCE,
 purpose: #STANDARD,
 label: 'Additional Indormation',
-parentId: 'General',
+//parentId: 'General',
 targetQualifier: 'AdditionalInfo'},
 
 { id:'HeaderStatus',
@@ -51,13 +50,15 @@ type: #LINEITEM_REFERENCE,
 position: 20,
 targetElement: '_PLAttach'
 }]
+@UI.identification: [{ importance: #HIGH, dataAction: 'SetStatusComplete', label: 'Update Status', position: 10, type: #FOR_ACTION }]
 
 @UI.selectionField: [{ position: 10 }]
-@UI.lineItem: [{ position: 10, label: 'Procurement List' }]
-@UI.fieldGroup: [{ position: 10, label: 'Procurement List Number', qualifier: 'PList' }]
+@UI.lineItem: [{ position: 10, label: 'Procurement List' },
+               {  importance: #HIGH, dataAction: 'SetStatusComplete', label: 'Update Status', position: 10, type: #FOR_ACTION }]
+//@UI.fieldGroup: [{ position: 10, label: 'Procurement List Number', qualifier: 'PList' }]
     Plist;
 @UI.lineItem: [{ position: 20, label: 'Name' }]
-@UI.fieldGroup: [{ position: 20, label: 'Name', qualifier: 'PList' }]
+//@UI.fieldGroup: [{ position: 20, label: 'Name', qualifier: 'PList' }]
     Name;
 @UI.selectionField: [{ position: 40 }]
 @UI.lineItem: [{ position: 30, label: 'Plate#' }]

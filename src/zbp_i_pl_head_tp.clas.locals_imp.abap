@@ -49,6 +49,25 @@ CLASS lhc_Plist IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD SetStatusComplete.
+    MODIFY ENTITIES OF zi_pl_head_tp IN LOCAL MODE
+      ENTITY Plist
+         UPDATE
+           FIELDS ( Status )
+           WITH VALUE #( FOR key IN keys
+                           ( %tky         = key-%tky
+                             Status = key-%param-status ) )
+      FAILED failed
+      REPORTED reported.
+
+*   Read the changed values and update result
+    READ ENTITIES OF zi_pl_head_tp IN LOCAL MODE
+      ENTITY Plist
+        ALL FIELDS WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_plist).
+
+    result = VALUE #( FOR ls_plist IN lt_plist
+                        ( %tky   = ls_plist-%tky
+                          %param = ls_plist ) ).
   ENDMETHOD.
 
   METHOD SetInitialStatus.
