@@ -5,41 +5,30 @@
     title: { value: 'Plist' },
     description: { type: #STANDARD, value: 'Plist'}
 }
-//@UI.presentationVariant: [{
-//    sortOrder: [{ by: 'AttachNo', direction: #ASC }],
-//    visualizations: [{ type: #AS_LINEITEM }]
-//}]
 annotate entity ZC_PL_ATTACH
     with 
 {
-@UI.facet: [    {
-                 label: 'General Information',
-                 id: 'GeneralInfo',
-                 type: #COLLECTION,
-                 position: 10
-                 },
-//                      { id:            'PL Info',
-//                     purpose:       #STANDARD,
-//                     type:          #IDENTIFICATION_REFERENCE,
-//                     label:         'Procurement List',
-//                     parentId: 'GeneralInfo',
-//                     position:      10 },
-                   {
-                       id: 'Upload',
-                       purpose: #STANDARD,
-                       type: #FIELDGROUP_REFERENCE,
-                       parentId: 'GeneralInfo',
-                       label: 'Upload Attachment',
-                       position: 20,
-                       targetQualifier: 'Upload'
-                   } ]
+@UI.facet: [{
+label: 'General Information',
+id: 'GeneralInfo',
+type: #COLLECTION,
+position: 10
+},
+{
+id: 'Upload',
+purpose: #STANDARD,
+type: #FIELDGROUP_REFERENCE,
+parentId: 'GeneralInfo',
+label: 'Upload Attachment',
+position: 20,
+targetQualifier: 'Upload'
+}]
                    
     @UI.lineItem: [{ position: 10, label: 'Procurement List' }]
-//    @UI.identification: [{ position: 10, label: 'Procurement List' }]
     @UI.fieldGroup: [{ position: 10, label: 'Plist', qualifier: 'Upload' }]
     Plist;
     @UI.lineItem: [{ position: 20, label: 'Attachment No' }]
-//    @UI.identification: [{ position: 20, label: 'Attachment No' }]
+
     @UI.fieldGroup: [{ position: 20, label: 'Attach No', qualifier: 'Upload' }]
     AttachNo;
     @UI.lineItem: [{ position: 30, label: 'File' }]

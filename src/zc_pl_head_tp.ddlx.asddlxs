@@ -16,10 +16,6 @@ type: #COLLECTION,
 purpose: #STANDARD,
 label: 'Procuremen List - Plate Number' },
 
-//{ id: 'Attachment',
-//type: #COLLECTION,
-//purpose: #STANDARD,
-//label: 'Attachments'},
 
 { id: 'PList',
 type: #FIELDGROUP_REFERENCE,
@@ -42,28 +38,19 @@ label: 'Additional Indormation',
 parentId: 'General',
 targetQualifier: 'AdditionalInfo'},
 
-//{ id: 'AttachFiles',
-//type: #FIELDGROUP_REFERENCE,
-//purpose: #STANDARD,
-//label: 'Reference File',
-//parentId: 'Attachment',
-//targetQualifier: 'AttachFiles' },
-
 { id:'HeaderStatus',
- purpose: #HEADER,
- type: #DATAPOINT_REFERENCE,
- targetQualifier: 'Status',
- position: 10
- },
- {
-           id: 'Upload',
-           purpose: #STANDARD,
-           label: 'Upload Attachments',
-           type: #LINEITEM_REFERENCE,
-           position: 20,
-           targetElement: '_PLAttach'
-       }
- ]
+purpose: #HEADER,
+type: #DATAPOINT_REFERENCE,
+targetQualifier: 'Status',
+position: 10 },
+
+{ id: 'Upload',
+purpose: #STANDARD,
+label: 'Upload Attachments',
+type: #LINEITEM_REFERENCE,
+position: 20,
+targetElement: '_PLAttach'
+}]
 
 @UI.selectionField: [{ position: 10 }]
 @UI.lineItem: [{ position: 10, label: 'Procurement List' }]

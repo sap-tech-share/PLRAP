@@ -32,9 +32,13 @@ CLASS lhc_Plist IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD earlynumbering_create.
-    data lv_max_plist TYPE ztab_pl_head-plist.
+
     DATA(lt_entities) = entities.
-    SELECT max(  plist ) FROM ztab_pl_head into @lv_max_plist.
+    SELECT max(  plist ) FROM ztab_pl_head into @DATA(lv_max_plist).
+    SELECT max(  plist ) FROM ztab_pl_head_d into @DATA(lv_max_plist_d).
+    if lv_max_plist_d gt lv_max_plist.
+        lv_max_plist = lv_max_plist_d.
+    endif.
 
     LOOP AT lt_entities INTO data(ls_entity).
         lv_max_plist = lv_max_plist + 1.
@@ -66,6 +70,27 @@ CLASS lhc_Plist IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD ValidatePlate.
+
+    READ ENTITIES OF zi_pl_head_tp IN LOCAL MODE
+    ENTITY Plist
+    FIELDS ( PlateNo )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_plist).
+
+
+    LOOP AT lt_plist INTO data(ls_plist) WHERE PlateNo IS NOT INITIAL.
+      SELECT SINGLE @abap_true FROM ztab_pl_head WHERE plate_no = @ls_plist-PlateNo INTO @data(lv_plate_exists).
+
+      IF lv_plate_exists = abap_true.
+*       Updated failed data
+        APPEND VALUE #( %tky = ls_plist-%tky ) TO failed-plist.
+*       Update message for the failed data
+        APPEND VALUE #( %tky = keys[ 1 ]-%tky
+                        %msg = new_message_with_text(
+                        severity = if_abap_behv_message=>severity-error
+                        text = 'Plate Number Exists') ) TO reported-plist.
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
 
   METHOD earlynumbering_cba_Plattach.
